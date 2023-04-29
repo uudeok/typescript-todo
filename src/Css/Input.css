@@ -1,0 +1,21 @@
+.form {
+    margin: auto;
+    width: 60%;
+    height: 50%;
+    margin-top: 35px;
+ }
+ 
+ .input {
+     width: 80%;
+     height: 50%;
+     text-align: center;
+     border: none;
+     border-bottom: 1px solid black;
+ }
+ 
+ .button {
+     margin-left: 10px;
+     border-radius: 12px;
+     border: none;
+ 
+ }

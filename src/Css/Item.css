@@ -1,0 +1,35 @@
+
+.list {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+
+.Btn {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reviseBtn {
+    width: 50%;
+    height: 45%; 
+}
+
+.deleteBtn{
+    width: 50%;
+    height: 45%;
+}
