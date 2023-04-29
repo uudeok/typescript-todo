@@ -1,10 +1,10 @@
 import React from 'react';
-
+import Layout from './Components/Layout';
 
 function App() {
   return (
     <div>
-      안녕
+      <Layout />
     </div>
   );
 }

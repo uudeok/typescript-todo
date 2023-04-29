@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import "../css/Item.css" ;
 import axios from 'axios';
+import { Todo } from './Layout';
 
-function Item(props) {
-    const deleteTodo = (event) => {
+interface Props {
+    setTodos : React.Dispatch<React.SetStateAction<Todo[]>>;
+    id : number;
+    contents : string;
+}
+
+function Item(props : Props) {
+    const deleteTodo = (event : React.MouseEvent<HTMLButtonElement>) => {
         axios.delete(`http://localhost:4500/todos/${props.id}`)
         .then(function(response) {
             props.setTodos(response.data);
         })
     }
 
-    const updateTodo = (event) => {
+    const updateTodo = (event : React.MouseEvent<HTMLButtonElement>) => {
         axios.put(`http://localhost:4500/todos/${props.id}`, {
             contents : inputValue
         }).then(function(response) {
@@ -19,7 +26,7 @@ function Item(props) {
     }
 
     const [inputValue, setInputValue] = useState(props.contents);
-    const changeInput = (event) => {
+    const changeInput = (event : React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     }
 
