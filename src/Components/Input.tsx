@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
 import "../css/Input.css" ;
 import axios from "axios";
+import { Todo } from './Layout';
+
+interface Props {
+    setTodos : React.Dispatch<React.SetStateAction<Todo[]>>
+}
 
 
-function Input(props) {
+function Input(props : Props) {
     const [content, setContent] = useState("");
 
-    const handleChange = (event) => {
+    const handleChange = (event : React.ChangeEvent<HTMLInputElement>) => {
         setContent(event.target.value);
     }
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        const response = await axios.post("http://localhost:4500/todos", 
+        const response = await axios.post<Todo[]>("http://localhost:4500/todos", 
         {
                 contents: content,
                 id: (Math.random() + 1) * 100000000,
         }); 
         props.setTodos(response.data);
         
-        // .then(function(response) {
-        //     props.setTodos(response.data)
-        // })
+        
        setContent("");
     }
 
