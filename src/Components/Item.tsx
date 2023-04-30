@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../Css/Item.css" ;
-import axios from 'axios';
 import { Todo } from './Layout';
+import todoAPI from "../todoaxios";
 
 interface Props {
     setTodos : React.Dispatch<React.SetStateAction<Todo[]>>;
@@ -10,22 +10,21 @@ interface Props {
 }
 
 function Item(props : Props) {
-    const deleteTodo = (event : React.MouseEvent<HTMLButtonElement>) => {
-        axios.delete(`http://localhost:4500/todos/${props.id}`)
-        .then(function(response) {
-            props.setTodos(response.data);
-        })
-    }
-
-    const updateTodo = (event : React.MouseEvent<HTMLButtonElement>) => {
-        axios.put(`http://localhost:4500/todos/${props.id}`, {
-            contents : inputValue
-        }).then(function(response) {
-            props.setTodos(response.data);
-        })
-    }
 
     const [inputValue, setInputValue] = useState(props.contents);
+
+    const deleteTodo = async (event : React.MouseEvent<HTMLButtonElement>) => {
+        const { data } = await todoAPI.delete<Todo[]>(`/${props.id}`)
+        props.setTodos(data);
+    }
+
+    const updateTodo = async (event : React.MouseEvent<HTMLButtonElement>) => {
+        const { data } = await todoAPI.put<Todo[]>(`/${props.id}`, {
+            contents : inputValue
+        })
+        props.setTodos(data);
+        }
+
     const changeInput = (event : React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     }
