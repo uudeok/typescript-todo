@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import "../Css/Item.css" ;
 import { Todo } from './Layout';
-import todoAPI from "../todoaxios";
+import { deleteTodo, updateTodo } from '../todoaxios';
+
+
 
 interface Props {
     setTodos : React.Dispatch<React.SetStateAction<Todo[]>>;
@@ -11,23 +13,22 @@ interface Props {
 
 function Item(props : Props) {
 
-    const [inputValue, setInputValue] = useState(props.contents);
-
-    const deleteTodo = async (event : React.MouseEvent<HTMLButtonElement>) => {
-        const { data } = await todoAPI.delete<Todo[]>(`/${props.id}`)
+  
+    const deleteBtn = async (event : React.MouseEvent<HTMLButtonElement>) => {
+        const data = await deleteTodo(props.id)  
         props.setTodos(data);
     }
-
-    const updateTodo = async (event : React.MouseEvent<HTMLButtonElement>) => {
-        const { data } = await todoAPI.put<Todo[]>(`/${props.id}`, {
-            contents : inputValue
-        })
+        
+    const updateBtn = async (event : React.MouseEvent<HTMLButtonElement>) => {
+        const data = await updateTodo(props.id, inputValue)
         props.setTodos(data);
-        }
-
+    }
     const changeInput = (event : React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     }
+
+    const [inputValue, setInputValue] = useState(props.contents);
+    
 
     return (
             <div className="list">
@@ -41,19 +42,19 @@ function Item(props : Props) {
                 <div className="Btn">
                     <button 
                         className="reviseBtn"
-                        onClick={updateTodo}
+                        onClick={updateBtn}
                     >
                             ✔
                     </button>
                     <button 
                         className="deleteBtn"
-                        onClick={deleteTodo}
+                        onClick={deleteBtn}
                     > 
                         ❌
                     </button>
                 </div>
             </div>
     )
-}
+ }
 
 export default Item;
